@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.goat</groupId>
-	<artifactId>delivery-tracker</artifactId>
+	<artifactId>gigstracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>delivery-tracker</name>
-	<description>Goat Delivery Tracker App</description>
+	<name>gigstracker</name>
+	<description>Goat Gigs Tracker App</description>
 	<url/>
 	<licenses>
 		<license/>
