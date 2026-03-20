@@ -2,6 +2,8 @@ package com.goattech.gigstracker.controller;
 
 import com.goattech.gigstracker.model.dto.CategoryDto;
 import com.goattech.gigstracker.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
@@ -13,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/categories")
+@Tag(name = "Categories", description = "Endpoints for managing expense and income categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -22,6 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all categories, optionally filtered by type")
     public List<CategoryDto> getCategories(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(required = false) String type) {
         if (!StringUtils.hasText(type)) {
@@ -31,12 +35,14 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Operation(summary = "Create a new category")
     public CategoryDto createCategory(@AuthenticationPrincipal Jwt jwt, @RequestBody CategoryDto dto) {
         UUID userId = UUID.fromString(jwt.getSubject());
         return categoryService.createCategory(dto, userId);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update an existing category")
     public CategoryDto updateCategory(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID id,
             @RequestBody CategoryDto dto) {
         UUID userId = UUID.fromString(jwt.getSubject());
@@ -44,6 +50,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a category")
     public ResponseEntity<Void> deleteCategory(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID id) {
         UUID userId = UUID.fromString(jwt.getSubject());
         categoryService.deleteCategory(id, userId);
